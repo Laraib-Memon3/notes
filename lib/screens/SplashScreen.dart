@@ -3,19 +3,19 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/screens/Home_Screen.dart';
 
-class SplashScreen extends StatefulWidget {
+class splash_screen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<splash_screen> {
   @override
   void initState() {
     super.initState();
     Timer(Duration(seconds: 10), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Home_Screen()),
+        MaterialPageRoute(builder: (context) => HomeScreen()),
       );
     });
   }
@@ -23,8 +23,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      
       backgroundColor: Color.fromRGBO(72, 91, 167, 1),
       body: Center(
         child: Column(

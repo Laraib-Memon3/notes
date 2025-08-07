@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:notes/screens/SplashScreen.dart';
+import 'package:provider/provider.dart';
+import 'package:notes/providers/note_provider.dart';
+import 'package:notes/screens/home_screen.dart';
 
 void main() {
-  runApp(NotesApp());
+  runApp(const MyApp());
 }
 
-class NotesApp extends StatelessWidget {
-  const NotesApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Notes App',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: SplashScreen()
+    return ChangeNotifierProvider(
+      create: (_) => NoteProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Note App',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: const HomeScreen(),
+      ),
     );
   }
 }
