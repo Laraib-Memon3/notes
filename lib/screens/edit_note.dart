@@ -9,22 +9,39 @@ class EditNoteScreen extends StatefulWidget {
   const EditNoteScreen({super.key, this.note});
 
   @override
-  _EditNoteScreenState createState() => _EditNoteScreenState();
+  State<EditNoteScreen> createState() => _EditNoteScreenState();
 }
 
 class _EditNoteScreenState extends State<EditNoteScreen> {
-  late TextEditingController _titleController;
-  late TextEditingController _contentController;
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _contentController = TextEditingController();
   bool _isEditing = false;
-  late bool _hasNote;
+  bool _hasNote = false;
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      initVairbales();
+    });
     super.initState();
+  }
+
+  initVairbales() {
     _hasNote = widget.note != null;
-    _titleController = TextEditingController(text: widget.note?.title ?? '');
-    _contentController = TextEditingController(text: widget.note?.content ?? '');
-    _isEditing = !_hasNote; 
+    _isEditing = _hasNote;
+    //print
+    print("Has note: $_hasNote");
+    print("Is editing: $_isEditing");
+    if (_hasNote && widget.note != null) {
+      _titleController.text = widget.note!.title;
+      _contentController.text = widget.note!.content;
+      setState(() {
+        
+      });
+    } else if (widget.note == null) {
+      _titleController.text = 'No Text Available';
+      _contentController.text = 'No content available';
+    }
   }
 
   @override
@@ -35,18 +52,20 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
   }
 
   bool _isValidInput() {
-    return _titleController.text.isNotEmpty && _contentController.text.isNotEmpty;
+    return _titleController.text.isNotEmpty &&
+        _contentController.text.isNotEmpty;
   }
 
   @override
   Widget build(BuildContext context) {
     final noteProvider = Provider.of<NoteProvider>(context, listen: false);
 
-   
-    final canSave = (_isEditing && _hasNote && _isValidInput()) ||
+    final canSave =
+        (_isEditing && _hasNote && _isValidInput()) ||
         (!_hasNote && _isValidInput());
 
     return Scaffold(
+      backgroundColor: Colors.teal,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -69,13 +88,16 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                         content: _contentController.text,
                       );
                       if (!_hasNote) {
-                        noteProvider.addNote(updatedNote.title, updatedNote.content);
+                        noteProvider.addNote(
+                          updatedNote.title,
+                          updatedNote.content,
+                        );
                       } else {
                         noteProvider.updateNote(updatedNote);
                       }
                       Navigator.of(context).pop();
                     } catch (e) {
-                      print("Save error: $e"); 
+                      print("Save error: $e");
                     }
                   }
                 : null,
@@ -111,7 +133,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                 hintText: _hasNote ? 'Title' : 'No note to edit',
                 hintStyle: TextStyle(
                   fontSize: 18,
-                  color: Colors.grey,
+                  color: Colors.black,
                   fontWeight: FontWeight.w500,
                 ),
                 border: InputBorder.none,
@@ -124,7 +146,9 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
               controller: _contentController,
               enabled: _isEditing && _hasNote,
               decoration: InputDecoration(
-                hintText: _hasNote ? 'Edit your note here...' : 'No note to edit',
+                hintText: _hasNote
+                    ? 'Edit your note here...'
+                    : 'No note to edit',
                 hintStyle: TextStyle(
                   fontSize: 25,
                   color: Colors.grey,
@@ -155,14 +179,18 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                         content: _contentController.text,
                       );
                       if (!_hasNote) {
-                        noteProvider.addNote(updatedNote.title, updatedNote.content);
+                        noteProvider.addNote(
+                          updatedNote.title,
+                          updatedNote.content,
+                        );
                       } else {
+                        //print
+                        print("Updating note: ${updatedNote.title}");
                         noteProvider.updateNote(updatedNote);
                       }
                       Navigator.of(context).pop();
                     } catch (e) {
                       print("Update error: $e");
-                      
                     }
                   }
                 : null,

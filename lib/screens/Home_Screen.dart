@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/Widgets/note_card.dart';
 import 'package:notes/models/note.dart';
 import 'package:notes/providers/note_provider.dart';
 import 'package:notes/screens/add_note_screen.dart';
@@ -74,25 +75,25 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class NoteCard extends StatelessWidget {
-  final Note note;
-  final Function(Note) onDelete;
+// class NoteCard extends StatelessWidget {
+//   final Note note;
+//   final Function(Note) onDelete;
 
-  const NoteCard({required this.note, required this.onDelete, Key? key})
-      : super(key: key);
+//   const NoteCard({required this.note, required this.onDelete, super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      child: ListTile(
-        title: Text(note.title),
-        subtitle: Text(note.content),
-        trailing: IconButton(
-          icon: Icon(Icons.delete, color: Colors.red),
-          onPressed: () => onDelete(note),
-        ),
-      ),
-    );
-  } 
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       color: Colors.teal,
+//       margin: EdgeInsets.symmetric(vertical: 8.0),
+//       child: ListTile(
+//         title: Text(note.title),
+//         subtitle: Text(note.content),
+//         trailing: IconButton(
+//           icon: Icon(Icons.delete, color: Colors.red),
+//           onPressed: () => onDelete(note),
+//         ),
+//       ),
+//     );
+//   } 
+// }

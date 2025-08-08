@@ -17,6 +17,7 @@ class NoteProvider with ChangeNotifier {
       _notes[index] = updatedNote;
       notifyListeners();
     }
+    notifyListeners();
   }
 
   void deleteNote(Note note) {
